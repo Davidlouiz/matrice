@@ -37,11 +37,11 @@ int main()
 
     	a.afficher();
     	std::cout << std::endl;
-
+      
     	b.afficher();
     	std::cout << std::endl;
 
-    	Matrice c = a * b;
+    	Matrice c = a / b;
     	c.afficher();
     }
     catch(std::string erreur)

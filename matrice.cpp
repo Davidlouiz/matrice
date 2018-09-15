@@ -75,6 +75,22 @@ void Matrice::ajouter(const Matrice& matrice)
 	this->hauteur = nouvelleHauteur;
 }
 
+void Matrice::ajouter(float n)
+{
+	for (size_t ligne = 0; ligne < this->hauteur; ligne++)
+	{
+		for (size_t colonne = 0; colonne < this->largeur; colonne++)
+		{
+			this->valeurs[ligne][colonne] += n;
+		}
+	}
+}
+
+void Matrice::soustraire(float n)
+{
+	this->ajouter(-n);
+}
+
 void Matrice::multiplier(const Matrice& matrice)
 {
 	Matrice a = *this;
@@ -88,7 +104,7 @@ void Matrice::multiplier(const Matrice& matrice)
 	size_t nouvelleLargeur = b.getLargeur();
 	size_t nouvelleHauteur = a.getHauteur();
 
-	Matrice c;
+	Matrice c; // Ici on se permet de creer un objet, bien que ce soit inutil car ca clarifie vraiment le code (enfin c'est discutable)
 	c.resize(nouvelleLargeur, nouvelleHauteur);
 
 	for (size_t colonne = 0; colonne < nouvelleLargeur; colonne++)
@@ -100,6 +116,56 @@ void Matrice::multiplier(const Matrice& matrice)
 			for (size_t i = 0; i < a.getLargeur(); i++)
 			{
 				somme += a[ligne][i] * b[i][colonne];
+			}
+			c.setValeur(ligne, colonne, somme);
+		}
+	}
+
+	*this = c;
+}
+
+void Matrice::multiplier(float n)
+{
+	for (size_t ligne = 0; ligne < this->hauteur; ligne++)
+	{
+		for (size_t colonne = 0; colonne < this->largeur; colonne++)
+		{
+			this->setValeur(ligne, colonne, this->valeurs[ligne][colonne] * n);
+		}
+	}
+}
+
+void Matrice::diviser(float n)
+{
+	// Ici on affecte directement l'objet donc inutile de creer une copie, modifier la copie et reaffecter tout à this
+	this->multiplier(1/n);
+}
+
+void Matrice::diviser(const Matrice& matrice)
+{
+	Matrice a = *this;
+	Matrice b = matrice;
+
+	if (a.getLargeur() != b.getHauteur())
+	{
+		throw std::string("La hauteur de la matrice en parametre ne correspond pas a largeur de cette matrice");
+	}
+
+	size_t nouvelleLargeur = b.getLargeur();
+	size_t nouvelleHauteur = a.getHauteur();
+
+	Matrice c; // Ici on se permet de creer un objet, bien que ce soit inutil car ca clarifie vraiment le code (enfin c'est discutable)
+	c.resize(nouvelleLargeur, nouvelleHauteur);
+
+	for (size_t colonne = 0; colonne < nouvelleLargeur; colonne++)
+	{
+		for (size_t ligne = 0; ligne < nouvelleHauteur; ligne++)
+		{
+			float somme = 0.0;
+
+			for (size_t i = 0; i < a.getLargeur(); i++)
+			{
+				somme += a[ligne][i] / b[i][colonne];
 			}
 			c.setValeur(ligne, colonne, somme);
 		}
@@ -151,11 +217,46 @@ Matrice Matrice::operator+(const Matrice& matrice) const
 	return resultat;
 }
 
+Matrice Matrice::operator+(float n) const
+{
+	Matrice resultat(*this);
+	resultat.ajouter(n);
+	return resultat;
+}
+
+Matrice Matrice::operator-(float n) const
+{
+	Matrice resultat(*this);
+	resultat.soustraire(n);
+	return resultat;
+}
+
 Matrice Matrice::operator*(const Matrice& matrice) const
 {
 	Matrice resultat(*this);
 	resultat.multiplier(matrice);
 	return resultat;
+}
+
+Matrice Matrice::operator*(float n) const
+{
+	Matrice resultat(*this);
+	resultat.multiplier(n);
+	return resultat;
+}
+
+Matrice Matrice::operator/(const Matrice& matrice) const
+{
+	Matrice resultat(*this);
+	resultat.diviser(matrice);
+	return resultat;
+}
+
+Matrice Matrice::operator/(float n) const
+{
+	Matrice resultat(*this);
+	resultat.diviser(n);
+	return resultat; // Quand on retourne le resultat, il faut creer un nouvel objet
 }
 
 void Matrice::resize(size_t nouvelleLargeur, size_t nouvelleHauteur)
