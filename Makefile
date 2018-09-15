@@ -13,10 +13,10 @@
 .PHONY : clean, fclean, re
 .SUFFIXES :
 
-NAME = matrice
+NAME = matrix
 
 SRC =	main.cpp\
-		  matrice.cpp
+		  matrix.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

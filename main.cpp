@@ -1,52 +1,51 @@
 #include <iostream>
-#include "matrice.h"
+#include "matrix.h"
 
 int main()
 {
-	//test
-    Matrice a(3, 4);
-    Matrice b(4, 2);
+    Matrix a(3, 4);
+    Matrix b(4, 2);
     try
     {
-		a.setValeur(0, 0, -3.0);
-		a.setValeur(0, 1, 3.0);
-		a.setValeur(0, 2, 0.0);
-		a.setValeur(0, 3, -10.0);
+		a.setValue(0, 0, -3.0);
+		a.setValue(0, 1, 3.0);
+		a.setValue(0, 2, 0.0);
+		a.setValue(0, 3, -10.0);
 
-		a.setValeur(1, 0, 7.0);
-		a.setValeur(1, 1, -6.0);
-		a.setValeur(1, 2, 9.0);
-		a.setValeur(1, 3, 2.0);
+		a.setValue(1, 0, 7.0);
+		a.setValue(1, 1, -6.0);
+		a.setValue(1, 2, 9.0);
+		a.setValue(1, 3, 2.0);
 
-		a.setValeur(2, 0, -9.0);
-		a.setValeur(2, 1, 9.0);
-		a.setValeur(2, 2, 3.0);
-		a.setValeur(2, 3, -8.0);
+		a.setValue(2, 0, -9.0);
+		a.setValue(2, 1, 9.0);
+		a.setValue(2, 2, 3.0);
+		a.setValue(2, 3, -8.0);
 
-		b.setValeur(0, 0, -8.0);
-		b.setValeur(0, 1, -5.0);
+		b.setValue(0, 0, -8.0);
+		b.setValue(0, 1, -5.0);
 
-		b.setValeur(1, 0, -4.0);
-		b.setValeur(1, 1, -7.0);
+		b.setValue(1, 0, -4.0);
+		b.setValue(1, 1, -7.0);
 
-		b.setValeur(2, 0, 11.0);
-		b.setValeur(2, 1, -8.0);
+		b.setValue(2, 0, 11.0);
+		b.setValue(2, 1, -8.0);
 
-		b.setValeur(3, 0, 11.0);
-		b.setValeur(3, 1, -9.0);
+		b.setValue(3, 0, 11.0);
+		b.setValue(3, 1, -9.0);
 
-    	a.afficher();
-    	std::cout << std::endl;
-      
-    	b.afficher();
+    	a.display();
     	std::cout << std::endl;
 
-    	Matrice c = a / b;
-    	c.afficher();
+    	b.display();
+    	std::cout << std::endl;
+
+    	Matrix c = a / 2;
+    	c.display();
     }
-    catch(std::string erreur)
+    catch(std::string error)
     {
-    	std::cout << erreur << std::endl;
+    	std::cout << error << std::endl;
     }
     return 0;
 }
