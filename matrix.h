@@ -36,6 +36,8 @@ class Matrix
 		Matrix operator*(float n) const;
 		Matrix operator/(float n) const;
 		void resize(size_t newWidth, size_t newHeight);
+    bool equal(const Matrix& matrix) const;
+    bool operator==(const Matrix& matrix) const;
 };
 
 #endif // MATRIX_H_INCLUDED

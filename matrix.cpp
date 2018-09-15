@@ -39,8 +39,6 @@ Matrix::~Matrix()
 
 void Matrix::display()
 {
-	std::cout << "---" << std::endl;
-
 	for(size_t line = 0; line < this->height; line++)
 	{
 		for(size_t column = 0; column < this->width; column++)
@@ -228,4 +226,27 @@ void Matrix::resize(size_t newWidth, size_t newHeight)
 	}
 	this->width = newWidth;
 	this->height = newHeight;
+}
+
+bool Matrix::equal(const Matrix& matrix) const
+{
+  if (this->getWidth() != matrix.getWidth())
+    return false;
+  if (this->getHeight() != matrix.getHeight())
+    return false;
+
+  for (size_t column = 0; column < this->getWidth(); column++)
+  {
+    for (size_t line = 0; line < this->getHeight(); line++)
+    {
+      if (this->getValue(line, column) != matrix.getValue(line, column))
+        return false;
+    }
+  }
+  return true;
+}
+
+bool Matrix::operator==(const Matrix& matrix) const
+{
+  return this->equal(matrix);
 }
