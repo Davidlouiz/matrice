@@ -163,7 +163,7 @@ void Matrix::setValue(size_t line, size_t column, float valeur)
   if (column >= this->width || line >= this->height)
   {
     std::stringstream flux;
-    flux << "The case [" << line << "," << column << "] doesn't exist : " << std::endl << "Line : " << this->height << std::endl << "Column : " << this->width << std::endl;
+    flux << "The case [" << line << "," << column << "] doesn't exist : " << std::endl << "Height : " << this->height << std::endl << "Width : " << this->width << std::endl;
     throw flux.str();
   }
   this->values[line][column] = valeur;
@@ -181,6 +181,12 @@ size_t Matrix::getHeight(void) const
 
 float Matrix::getValue(size_t line, size_t column) const
 {
+  if (column >= this->width || line >= this->height)
+  {
+    std::stringstream flux;
+    flux << "The case [" << line << "," << column << "] doesn't exist : " << std::endl << "Height : " << this->height << std::endl << "Width : " << this->width << std::endl;
+    throw flux.str();
+  }
   return this->values[line][column];
 }
 

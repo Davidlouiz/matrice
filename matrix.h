@@ -15,15 +15,14 @@ class Matrix
 		void add(float n);
 		void subtract(const Matrix& matrix);
 		void subtract(float n);
+		void multiply(const Matrix& matrix);
+		void multiply(float n);
 
 	public:
 		Matrix(); // checked
 		Matrix(size_t height, size_t width); // checked
 		Matrix(const Matrix& matrixToCopy); // checked
 		void display(); // checked
-		void multiply(const Matrix& matrix);
-		void multiply(float n);
-		void divide(const Matrix& matrix);
 		void divide(float n);
 		size_t getWidth(void) const; // checked
 		size_t getHeight(void) const; // checked
@@ -35,8 +34,8 @@ class Matrix
 		Matrix operator+(float n) const; // checked
 		Matrix operator-(const Matrix& matrix) const; // checked
 		Matrix operator-(float n) const; // checked
-		Matrix operator*(const Matrix& matrix) const;
-		Matrix operator*(float n) const;
+		Matrix operator*(const Matrix& matrix) const; // checked
+		Matrix operator*(float n) const; // checked
 		Matrix operator/(float n) const;
     bool operator==(const Matrix& matrix) const; // checked
     bool operator!=(const Matrix& matrix) const; // checked
