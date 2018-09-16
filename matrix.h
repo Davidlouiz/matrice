@@ -11,15 +11,15 @@ class Matrix
 		std::vector<std::vector<float> > values;
     bool equal(const Matrix& matrix) const;
 		void resize(size_t newWidth, size_t newHeight);
-
-	public:
-		Matrix();
-		Matrix(size_t height, size_t width);
-		Matrix(const Matrix& matrixToCopy);
-		~Matrix();
-		void display();
 		void add(const Matrix& matrix);
 		void add(float n);
+
+	public:
+		Matrix(); // checked
+		Matrix(size_t height, size_t width); // checked
+		Matrix(const Matrix& matrixToCopy); // checked
+		void display(); // checked
+		void subtract(const Matrix& matrix);
 		void subtract(float n);
 		void multiply(const Matrix& matrix);
 		void multiply(float n);
@@ -31,14 +31,19 @@ class Matrix
 		float getValue(size_t line, size_t column) const;
 		std::vector<std::vector<float> > getValues(void) const;
 		std::vector<float> operator[] (size_t x) const;
-		Matrix operator+(const Matrix& matrix) const;
-		Matrix operator+(float n) const;
+		Matrix operator+(const Matrix& matrix) const; // checked
+		Matrix operator+(float n) const; // checked
+		Matrix operator-(const Matrix& matrix) const;
 		Matrix operator-(float n) const;
 		Matrix operator*(const Matrix& matrix) const;
 		Matrix operator*(float n) const;
 		Matrix operator/(float n) const;
-    bool operator==(const Matrix& matrix) const;
-    bool operator!=(const Matrix& matrix) const;
+    bool operator==(const Matrix& matrix) const; // checked
+    bool operator!=(const Matrix& matrix) const; // checked
+    Matrix& operator+=(const Matrix& matrix); // checked
+    Matrix& operator+=(float n); // checked
+    Matrix& operator-=(const Matrix& matrix); // checked
+    Matrix& operator-=(float n); // checked
 };
 
 #endif // MATRIX_H_INCLUDED

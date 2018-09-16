@@ -16,6 +16,7 @@
 #define TEST_ADD
 #define TEST_EQUAL
 #define TEST_DIFFERENT
+#define TEST_SUBTRACT
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,6 +31,7 @@ int     test_display(void);
 int     test_add(void);
 int     test_equal(void);
 int     test_different(void);
+int     test_subtract(void);
 
 #define ERROR() { printf("Line %d, ", __LINE__); return (0); }
 #define ADD_TEST(NAME) add_test(tests_list, #NAME, test_##NAME)
@@ -75,6 +77,9 @@ int     main(void)
 #endif
 #ifdef TEST_DIFFERENT
     ADD_TEST(different);
+#endif
+#ifdef TEST_SUBTRACT
+    ADD_TEST(subtract);
 #endif
 
     i = 0;
@@ -191,9 +196,27 @@ int     test_add(void)
   c.setValue(2, 0, 55);
   c.setValue(2, 1, 66);
 
-  a.add((const Matrix)b);
+  Matrix d(3, 2);
+  d.setValue(0, 0, 13);
+  d.setValue(0, 1, 24);
+  d.setValue(1, 0, 35);
+  d.setValue(1, 1, 46);
+  d.setValue(2, 0, 57);
+  d.setValue(2, 1, 68);
 
+  if (a + b != c)
+    ERROR();
+
+  a += b;
   if (a != c)
+    ERROR();
+
+  if (a + 2 != d)
+    ERROR();
+
+  a += 2;
+
+  if (a != d)
     ERROR();
 
   return (1);
@@ -318,6 +341,60 @@ int     test_different(void)
 
   Matrix e;
   if (! (a != e))
+    ERROR();
+
+  return (1);
+}
+#endif
+
+#ifdef TEST_SUBTRACT
+int     test_subtract(void)
+{
+  Matrix a(3, 2);
+  a.setValue(0, 0, 1);
+  a.setValue(0, 1, 2);
+  a.setValue(1, 0, 3);
+  a.setValue(1, 1, 4);
+  a.setValue(2, 0, 5);
+  a.setValue(2, 1, 6);
+
+  Matrix b(3, 2);
+  b.setValue(0, 0, 10);
+  b.setValue(0, 1, 20);
+  b.setValue(1, 0, 30);
+  b.setValue(1, 1, 40);
+  b.setValue(2, 0, 50);
+  b.setValue(2, 1, 60);
+
+  Matrix c(3, 2);
+  c.setValue(0, 0, 11);
+  c.setValue(0, 1, 22);
+  c.setValue(1, 0, 33);
+  c.setValue(1, 1, 44);
+  c.setValue(2, 0, 55);
+  c.setValue(2, 1, 66);
+
+  Matrix d(3, 2);
+  d.setValue(0, 0, 13);
+  d.setValue(0, 1, 24);
+  d.setValue(1, 0, 35);
+  d.setValue(1, 1, 46);
+  d.setValue(2, 0, 57);
+  d.setValue(2, 1, 68);
+
+  if (d - 2 != c)
+    ERROR();
+
+  d -= 2;
+
+  if (d != c)
+    ERROR();
+
+  if (c - b != a)
+    ERROR();
+
+  c -= b;
+  if (c != a)
     ERROR();
 
   return (1);

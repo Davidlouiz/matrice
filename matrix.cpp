@@ -32,11 +32,6 @@ Matrix::Matrix(const Matrix& matrixToCopy)
   this->values = matrixToCopy.getValues();
 }
 
-Matrix::~Matrix()
-{
-
-}
-
 void Matrix::display()
 {
 	for(size_t line = 0; line < this->height; line++)
@@ -82,6 +77,30 @@ void Matrix::add(float n)
       this->values[line][column] += n;
     }
   }
+}
+
+void Matrix::subtract(const Matrix& matrix)
+{
+  size_t newWidth = std::min(this->width, matrix.getWidth());
+  size_t newHeight = std::min(this->height, matrix.getHeight());
+
+  this->values.resize(newHeight);
+
+  for (size_t i = 0; i < this->values.size(); i++)
+  {
+    this->values[i].resize(newWidth);
+  }
+
+  for (size_t line = 0; line < newHeight; line++)
+  {
+    for (size_t column = 0; column < newWidth; column++)
+    {
+      this->values[line][column] -= matrix.getValue(line, column);
+    }
+  }
+
+  this->width = newWidth;
+  this->height = newHeight;
 }
 
 void Matrix::subtract(float n)
@@ -189,6 +208,13 @@ Matrix Matrix::operator+(float n) const
   return result;
 }
 
+Matrix Matrix::operator-(const Matrix& matrix) const
+{
+  Matrix result(*this);
+  result.subtract(matrix);
+  return result;
+}
+
 Matrix Matrix::operator-(float n) const
 {
   Matrix result(*this);
@@ -254,4 +280,28 @@ bool Matrix::operator==(const Matrix& matrix) const
 bool Matrix::operator!=(const Matrix& matrix) const
 {
   return ! this->equal(matrix);
+}
+
+Matrix& Matrix::operator+=(const Matrix& matrix)
+{
+    this->add(matrix);
+    return *this;
+}
+
+Matrix& Matrix::operator+=(float n)
+{
+  this->add(n);
+  return *this;
+}
+
+Matrix& Matrix::operator-=(const Matrix& matrix)
+{
+    this->subtract(matrix);
+    return *this;
+}
+
+Matrix& Matrix::operator-=(float n)
+{
+  this->subtract(n);
+  return *this;
 }
