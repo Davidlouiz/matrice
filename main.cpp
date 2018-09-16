@@ -20,6 +20,9 @@
 #define TEST_GET_WIDTH
 #define TEST_GET_HEIGHT
 #define TEST_MULTIPLY
+#define TEST_SET_VALUE
+#define TEST_GET_VALUE
+#define TEST_DIVIDE
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,6 +30,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <iostream>
 #include "matrix.h"
 
 int     test_constructors(void);
@@ -38,6 +42,9 @@ int     test_subtract(void);
 int     test_get_width(void);
 int     test_get_height(void);
 int     test_multiply(void);
+int     test_set_value(void);
+int     test_get_value(void);
+int     test_divide(void);
 
 #define ERROR() { printf("Line %d, ", __LINE__); return (0); }
 #define ADD_TEST(NAME) add_test(tests_list, #NAME, test_##NAME)
@@ -95,6 +102,15 @@ int     main(void)
 #endif
 #ifdef TEST_MULTIPLY
     ADD_TEST(multiply);
+#endif
+#ifdef TEST_SET_VALUE
+    ADD_TEST(set_value);
+#endif
+#ifdef TEST_GET_VALUE
+    ADD_TEST(get_value);
+#endif
+#ifdef TEST_DIVIDE
+    ADD_TEST(divide);
 #endif
 
     i = 0;
@@ -504,6 +520,144 @@ int     test_multiply(void)
   b *= 2;
 
   if (b != d)
+    ERROR();
+
+  return (1);
+}
+#endif
+
+#ifdef TEST_SET_VALUE
+int     test_set_value(void)
+{
+  Matrix a(3, 4);
+  a.setValue(0, 0, -3);
+  a.setValue(0, 1, 3);
+  a.setValue(0, 2, 0);
+  a.setValue(0, 3, -10);
+  a.setValue(1, 0, 7);
+  a.setValue(1, 1, -6);
+  a.setValue(1, 2, 9);
+  a.setValue(1, 3, 2);
+  a.setValue(2, 0, -9);
+  a.setValue(2, 1, 9);
+  a.setValue(2, 2, 3);
+  a.setValue(2, 3, -8);
+
+  try
+  {
+    a.setValue(3, 0, 0);
+    ERROR();
+  }
+  catch(std::string e)
+  {
+  }
+
+  try
+  {
+    a.setValue(0, 4, 0);
+    ERROR();
+  }
+  catch(std::string e)
+  {
+  }
+
+  return (1);
+}
+#endif
+
+#ifdef TEST_GET_VALUE
+int     test_get_value(void)
+{
+  Matrix a(3, 4);
+  a.setValue(0, 0, -3);
+  a.setValue(0, 1, 3);
+  a.setValue(0, 2, 0);
+  a.setValue(0, 3, -10);
+  a.setValue(1, 0, 7);
+  a.setValue(1, 1, -6);
+  a.setValue(1, 2, 9);
+  a.setValue(1, 3, 2);
+  a.setValue(2, 0, -9);
+  a.setValue(2, 1, 9);
+  a.setValue(2, 2, 3);
+  a.setValue(2, 3, -8);
+
+  if (a.getValue(0, 0) != -3)
+    ERROR();
+  if (a.getValue(0, 1) != 3)
+    ERROR();
+  if (a.getValue(0, 2) != 0)
+    ERROR();
+  if (a.getValue(0, 3) != -10)
+    ERROR();
+  if (a.getValue(1, 0) != 7)
+    ERROR();
+  if (a.getValue(1, 1) != -6)
+    ERROR();
+  if (a.getValue(1, 2) != 9)
+    ERROR();
+  if (a.getValue(1, 3) != 2)
+    ERROR();
+  if (a.getValue(2, 0) != -9)
+    ERROR();
+  if (a.getValue(2, 1) != 9)
+    ERROR();
+  if (a.getValue(2, 2) != 3)
+    ERROR();
+  if (a.getValue(2, 3) != -8)
+    ERROR();
+
+  try
+  {
+    a.getValue(3, 0);
+    ERROR();
+  }
+  catch(std::string e)
+  {
+  }
+
+  try
+  {
+    a.getValue(0, 4);
+    ERROR();
+  }
+  catch(std::string e)
+  {
+  }
+
+  return (1);
+}
+#endif
+
+#ifdef TEST_DIVIDE
+int     test_divide(void)
+{
+  Matrix a(4, 2);
+  a.setValue(0, 0, -8);
+  a.setValue(0, 1, -5);
+  a.setValue(1, 0, -4);
+  a.setValue(1, 1, -7);
+  a.setValue(2, 0, 11);
+  a.setValue(2, 1, -8);
+  a.setValue(3, 0, 11);
+  a.setValue(3, 1, -9);
+
+  Matrix b(4, 2);
+  b.setValue(0, 0, -16);
+  b.setValue(0, 1, -10);
+  b.setValue(1, 0, -8);
+  b.setValue(1, 1, -14);
+  b.setValue(2, 0, 22);
+  b.setValue(2, 1, -16);
+  b.setValue(3, 0, 22);
+  b.setValue(3, 1, -18);
+
+  if (b / 2 != a)
+    ERROR();
+
+  b /= 2;
+
+  if (a != b)
     ERROR();
 
   return (1);

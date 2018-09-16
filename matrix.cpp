@@ -32,7 +32,7 @@ Matrix::Matrix(const Matrix& matrixToCopy)
   this->values = matrixToCopy.getValues();
 }
 
-void Matrix::display()
+void Matrix::display() const
 {
 	for(size_t line = 0; line < this->height; line++)
 	{
@@ -321,5 +321,11 @@ Matrix& Matrix::operator*=(const Matrix& matrix)
 Matrix& Matrix::operator*=(float n)
 {
   this->multiply(n);
+  return *this;
+}
+
+Matrix& Matrix::operator/=(float n)
+{
+  this->divide(n);
   return *this;
 }
