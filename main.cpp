@@ -14,6 +14,8 @@
 #define TEST_CONSTRUCTORS
 #define TEST_DISPLAY
 #define TEST_ADD
+#define TEST_EQUAL
+#define TEST_DIFFERENT
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,6 +28,8 @@
 int     test_constructors(void);
 int     test_display(void);
 int     test_add(void);
+int     test_equal(void);
+int     test_different(void);
 
 #define ERROR() { printf("Line %d, ", __LINE__); return (0); }
 #define ADD_TEST(NAME) add_test(tests_list, #NAME, test_##NAME)
@@ -65,6 +69,12 @@ int     main(void)
 #endif
 #ifdef TEST_ADD
     ADD_TEST(add);
+#endif
+#ifdef TEST_EQUAL
+    ADD_TEST(equal);
+#endif
+#ifdef TEST_DIFFERENT
+    ADD_TEST(different);
 #endif
 
     i = 0;
@@ -183,13 +193,133 @@ int     test_add(void)
 
   a.add((const Matrix)b);
 
-  if ( ! (a == c))
+  if (a != c)
     ERROR();
 
   return (1);
 }
 #endif
 
-// TODO : Tester equal rapidement
-// TODO : Tester operator== rapidement
-// TODO : Tester operator!= rapidement
+#ifdef TEST_EQUAL
+int     test_equal(void)
+{
+  Matrix a(3, 2);
+  a.setValue(0, 0, 1);
+  a.setValue(0, 1, 2);
+  a.setValue(1, 0, 3);
+  a.setValue(1, 1, 4);
+  a.setValue(2, 0, 5);
+  a.setValue(2, 1, 6);
+
+  Matrix b(3, 2);
+  b.setValue(0, 0, 1);
+  b.setValue(0, 1, 2);
+  b.setValue(1, 0, 3);
+  b.setValue(1, 1, 4);
+  b.setValue(2, 0, 5);
+  b.setValue(2, 1, 666);
+
+  if (a == b)
+    ERROR();
+
+  b.setValue(2, 1, 6);
+
+  if ( ! (a == b))
+    ERROR();
+
+  b.setValue(0, 0, 0);
+
+  if (a == b)
+      ERROR();
+
+  Matrix c(4, 2);
+  c.setValue(0, 0, 1);
+  c.setValue(0, 1, 2);
+  c.setValue(1, 0, 3);
+  c.setValue(1, 1, 4);
+  c.setValue(2, 0, 5);
+  c.setValue(2, 1, 6);
+
+  if (a == c)
+    ERROR();
+
+  Matrix d(3, 3);
+  d.setValue(0, 0, 1);
+  d.setValue(0, 1, 2);
+  d.setValue(1, 0, 3);
+  d.setValue(1, 1, 4);
+  d.setValue(2, 0, 5);
+  d.setValue(2, 1, 6);
+
+  if (a == d)
+    ERROR();
+
+  Matrix e;
+  if (a == e)
+    ERROR();
+
+  return (1);
+}
+#endif
+
+#ifdef TEST_DIFFERENT
+int     test_different(void)
+{
+  Matrix a(3, 2);
+  a.setValue(0, 0, 1);
+  a.setValue(0, 1, 2);
+  a.setValue(1, 0, 3);
+  a.setValue(1, 1, 4);
+  a.setValue(2, 0, 5);
+  a.setValue(2, 1, 6);
+
+  Matrix b(3, 2);
+  b.setValue(0, 0, 1);
+  b.setValue(0, 1, 2);
+  b.setValue(1, 0, 3);
+  b.setValue(1, 1, 4);
+  b.setValue(2, 0, 5);
+  b.setValue(2, 1, 666);
+
+  if (! (a != b))
+    ERROR();
+
+  b.setValue(2, 1, 6);
+
+  if (a != b)
+    ERROR();
+
+  b.setValue(0, 0, 0);
+
+  if (! (a != b))
+      ERROR();
+
+  Matrix c(4, 2);
+  c.setValue(0, 0, 1);
+  c.setValue(0, 1, 2);
+  c.setValue(1, 0, 3);
+  c.setValue(1, 1, 4);
+  c.setValue(2, 0, 5);
+  c.setValue(2, 1, 6);
+
+  if (! (a != c))
+    ERROR();
+
+  Matrix d(3, 3);
+  d.setValue(0, 0, 1);
+  d.setValue(0, 1, 2);
+  d.setValue(1, 0, 3);
+  d.setValue(1, 1, 4);
+  d.setValue(2, 0, 5);
+  d.setValue(2, 1, 6);
+
+  if (! (a != d))
+    ERROR();
+
+  Matrix e;
+  if (! (a != e))
+    ERROR();
+
+  return (1);
+}
+#endif

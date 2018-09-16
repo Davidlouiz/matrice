@@ -250,3 +250,8 @@ bool Matrix::operator==(const Matrix& matrix) const
 {
   return this->equal(matrix);
 }
+
+bool Matrix::operator!=(const Matrix& matrix) const
+{
+  return ! this->equal(matrix);
+}

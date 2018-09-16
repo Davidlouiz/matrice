@@ -9,6 +9,8 @@ class Matrix
 		size_t height;
 		size_t width;
 		std::vector<std::vector<float> > values;
+    bool equal(const Matrix& matrix) const;
+		void resize(size_t newWidth, size_t newHeight);
 
 	public:
 		Matrix();
@@ -35,9 +37,8 @@ class Matrix
 		Matrix operator*(const Matrix& matrix) const;
 		Matrix operator*(float n) const;
 		Matrix operator/(float n) const;
-		void resize(size_t newWidth, size_t newHeight);
-    bool equal(const Matrix& matrix) const;
     bool operator==(const Matrix& matrix) const;
+    bool operator!=(const Matrix& matrix) const;
 };
 
 #endif // MATRIX_H_INCLUDED
