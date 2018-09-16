@@ -17,6 +17,9 @@
 #define TEST_EQUAL
 #define TEST_DIFFERENT
 #define TEST_SUBTRACT
+#define TEST_GET_WIDTH
+#define TEST_GET_HEIGHT
+#define TEST_MULTIPLY
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,6 +35,9 @@ int     test_add(void);
 int     test_equal(void);
 int     test_different(void);
 int     test_subtract(void);
+int     test_get_width(void);
+int     test_get_height(void);
+int     test_multiply(void);
 
 #define ERROR() { printf("Line %d, ", __LINE__); return (0); }
 #define ADD_TEST(NAME) add_test(tests_list, #NAME, test_##NAME)
@@ -80,6 +86,15 @@ int     main(void)
 #endif
 #ifdef TEST_SUBTRACT
     ADD_TEST(subtract);
+#endif
+#ifdef TEST_GET_WIDTH
+    ADD_TEST(get_width);
+#endif
+#ifdef TEST_GET_HEIGHT
+    ADD_TEST(get_height);
+#endif
+#ifdef TEST_MULTIPLY
+    ADD_TEST(multiply);
 #endif
 
     i = 0;
@@ -395,6 +410,100 @@ int     test_subtract(void)
 
   c -= b;
   if (c != a)
+    ERROR();
+
+  return (1);
+}
+#endif
+
+#ifdef TEST_GET_WIDTH
+int     test_get_width(void)
+{
+  Matrix a;
+  if (a.getWidth() != 0)
+    ERROR();
+
+  Matrix b(2, 3);
+  if (b.getWidth() != 3)
+    ERROR();
+
+  return (1);
+}
+#endif
+
+#ifdef TEST_GET_HEIGHT
+int     test_get_height(void)
+{
+  Matrix a;
+  if (a.getHeight() != 0)
+    ERROR();
+
+  Matrix b(2, 3);
+  if (b.getHeight() != 2)
+    ERROR();
+
+  return (1);
+}
+#endif
+
+#ifdef TEST_MULTIPLY
+int     test_multiply(void)
+{
+  Matrix a(3, 4);
+  a.setValue(0, 0, -3);
+  a.setValue(0, 1, 3);
+  a.setValue(0, 2, 0);
+  a.setValue(0, 3, -10);
+  a.setValue(1, 0, 7);
+  a.setValue(1, 1, -6);
+  a.setValue(1, 2, 9);
+  a.setValue(1, 3, 2);
+  a.setValue(2, 0, -9);
+  a.setValue(2, 1, 9);
+  a.setValue(2, 2, 3);
+  a.setValue(2, 3, -8);
+
+  Matrix b(4, 2);
+  b.setValue(0, 0, -8);
+  b.setValue(0, 1, -5);
+  b.setValue(1, 0, -4);
+  b.setValue(1, 1, -7);
+  b.setValue(2, 0, 11);
+  b.setValue(2, 1, -8);
+  b.setValue(3, 0, 11);
+  b.setValue(3, 1, -9);
+
+  Matrix c(3, 2);
+  c.setValue(0, 0, -98);
+  c.setValue(0, 1, 84);
+  c.setValue(1, 0, 89);
+  c.setValue(1, 1, -83);
+  c.setValue(2, 0, -19);
+  c.setValue(2, 1, 30);
+
+  Matrix d(4, 2);
+  d.setValue(0, 0, -16);
+  d.setValue(0, 1, -10);
+  d.setValue(1, 0, -8);
+  d.setValue(1, 1, -14);
+  d.setValue(2, 0, 22);
+  d.setValue(2, 1, -16);
+  d.setValue(3, 0, 22);
+  d.setValue(3, 1, -18);
+
+  if (a * b != c)
+    ERROR();
+
+  a *= b;
+  if (a != c)
+    ERROR();
+
+  if (b * 2 != d)
+    ERROR();
+
+  b *= 2;
+
+  if (b != d)
     ERROR();
 
   return (1);

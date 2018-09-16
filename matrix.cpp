@@ -305,3 +305,15 @@ Matrix& Matrix::operator-=(float n)
   this->subtract(n);
   return *this;
 }
+
+Matrix& Matrix::operator*=(const Matrix& matrix)
+{
+    this->multiply(matrix);
+    return *this;
+}
+
+Matrix& Matrix::operator*=(float n)
+{
+  this->multiply(n);
+  return *this;
+}
