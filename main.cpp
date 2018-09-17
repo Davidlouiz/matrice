@@ -31,6 +31,12 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <iostream>
+
+#if defined (linux)
+# include <sys/types.h>
+# include <sys/wait.h>
+#endif
+
 #include "matrix.h"
 
 int     test_constructors(void);

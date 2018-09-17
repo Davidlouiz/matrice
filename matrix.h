@@ -3,6 +3,10 @@
 
 #include <vector>
 
+#if defined (linux)
+# include <sys/types.h>
+#endif
+
 class Matrix
 {
 	private:
